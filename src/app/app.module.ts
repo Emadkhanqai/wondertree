@@ -14,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     HorizontalComponent,
     NavBarComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, PortalModule, HttpClientModule],
   providers: [AuthService],

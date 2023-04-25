@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavBarComponent } from './layout/nav-bar/nav-bar.component';
+import { RouterModule } from '@angular/router';
+import { portalRoutes } from './portal.routing';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule.forChild(portalRoutes)],
   exports: [],
   providers: [],
 })

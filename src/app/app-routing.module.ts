@@ -6,7 +6,7 @@ import { AuthGuard } from './modules/shared/guard/user-authenticated.guard';
 import { PageNotFoundComponent } from './modules/shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'welcome' },
+  { path: '', pathMatch: 'full', redirectTo: 'portal' },
   {
     path: '',
     canActivate: [NoAuthGuard],
@@ -30,22 +30,13 @@ const routes: Routes = [
   },
   {
     path: '',
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
-    component: HorizontalComponent,
+    // canActivateChild: [AuthGuard],
     children: [
       {
-        path: 'welcome',
+        path: 'portal',
         loadChildren: () =>
-          import('./modules/portal/welcome/welcome.module').then(
-            (m) => m.WelcomeModule
-          ),
-      },
-      {
-        path: 'dashboard',
-        loadChildren: () =>
-          import('./modules/portal/dashboard/dashboard.module').then(
-            (m) => m.DashboardModule
+          import('./modules/portal/portal.module').then(
+            (m) => m.PortalModule
           ),
       },
     ],
