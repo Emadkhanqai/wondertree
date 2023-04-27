@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { AuthService } from 'src/app/modules/shared/services/authentication.service';
 
 @Component({
   selector: 'nav-bar',
@@ -8,7 +9,9 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
   showProfileListingMenu: boolean = false;
-  constructor(private _router: Router) {}
+  isAdmin: boolean = false;
+
+  constructor(private _router: Router, private _authService: AuthService) {}
 
   ngOnInit(): void {
     this._router.events.subscribe((event) => {
@@ -16,6 +19,10 @@ export class NavBarComponent implements OnInit {
         this.showProfileListingMenu = false;
       }
     });
+
+    if (this._authService.isAdmin) {
+      this.isAdmin = true;
+    }
   }
 
   isActive(path: string): boolean {

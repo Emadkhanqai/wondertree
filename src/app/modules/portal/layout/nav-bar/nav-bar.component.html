@@ -24,6 +24,14 @@
               class="text-gray-300 text-white rounded-md px-3 py-2 text-sm font-medium"
               >Tasks</a
             >
+            <ng-container *ngIf="isAdmin">
+              <a
+                [routerLink]="'./user-management'"
+                routerLinkActive="bg-gray-900"
+                class="text-gray-300 text-white rounded-md px-3 py-2 text-sm font-medium"
+                >Users</a
+              >
+            </ng-container>
           </div>
         </div>
       </div>

@@ -22,6 +22,14 @@ export class AuthService {
     return localStorage.getItem('userProfile') ?? '';
   }
 
+  get isAdmin(): boolean {
+    if (this.userProfile) {
+      const getRole = JSON.parse(this.userProfile).role;
+      return getRole === 'admin';
+    }
+    return false;
+  }
+
   encrypt(text: string): string {
     const encrypted = CryptoJS.AES.encrypt(
       text,
