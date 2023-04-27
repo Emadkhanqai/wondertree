@@ -1,76 +1,88 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { AuthUtils } from './auth.util';
-import { UserProfileService } from './user-profile.service';
+import { Observable, map, of, switchMap, throwError } from 'rxjs';
 import { Api } from './api';
+import { User } from './interface/user.interface';
+import * as CryptoJS from 'crypto-js';
 
+const secretEncryptionKey = '!(0asdoiu@!$0979021OAISU0980123';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   _authenticated: boolean = false;
+  _userProfile!: User;
 
-  constructor(
-    private _userService: UserProfileService,
-    private _api: Api // private _store: StarStore
-  ) {}
+  constructor(private _api: Api) {}
 
-  set accessToken(token: string) {
-    localStorage.setItem('accessToken', token);
+  set userProfile(token: string) {
+    localStorage.setItem('userProfile', token);
   }
 
-  get accessToken(): string {
-    return localStorage.getItem('accessToken') ?? '';
+  get userProfile(): string {
+    return localStorage.getItem('userProfile') ?? '';
   }
 
-  /**
-   * Sign in using the access token
-   */
-  signInUsingToken(): Observable<any> {
-    // Sign in using the token
+  encrypt(text: string): string {
+    const encrypted = CryptoJS.AES.encrypt(
+      text,
+      secretEncryptionKey
+    ).toString();
+    return encrypted;
+  }
 
-    if (localStorage.getItem('userProfile')) {
-      const userProfile = JSON.parse(localStorage.getItem('userProfile') ?? '');
-      const accessToken = localStorage.getItem('accessToken');
+  decrypt(encryptedText: string): string {
+    const decrypted = CryptoJS.AES.decrypt(
+      encryptedText,
+      secretEncryptionKey
+    ).toString(CryptoJS.enc.Utf8);
+    return decrypted;
+  }
 
-      const response = {
-        user: userProfile,
-        accessToken: accessToken,
-      };
+  registerUser(
+    name: string,
+    email: string,
+    password: string,
+    role: string
+  ): Observable<any> {
+    return this._api.get('users').pipe(
+      switchMap((users: any[]) => {
+        const userExists = users && users.some((user) => user.email === email);
+        if (userExists) {
+          return throwError('User already exists');
+        } else {
+          const user = { name, email, password: this.encrypt(password), role };
+          return this._api.post('users', user);
+        }
+      })
+    );
+  }
 
-      if (response.accessToken) {
-        this.accessToken = response.accessToken;
-      }
-
-      // Set the authenticated flag to true
-      this._authenticated = true;
-
-      // Store the user on the user service
-      this._userService.user = response.user;
-
-      // Return true
-      return of(true);
-    }
-    return of(false);
+  loginUser(email: string, password: string) {
+    return this._api.get('users').pipe(
+      switchMap((users: any[]) => {
+        const user = users.filter((user) => user.email === email);
+        if (user.length > 0) {
+          const decrypt = this.decrypt(user[0].password);
+          if (password.trim() === decrypt.trim()) {
+            delete user[0].password;
+            return of(user[0]);
+          } else {
+            return throwError('You have entered wrong credentials');
+          }
+        } else {
+          return throwError(
+            'There was some error logging in, Please try again.'
+          );
+        }
+      })
+    );
   }
 
   check(): Observable<boolean> {
-    // Check if the user is logged in
-    if (this._authenticated) {
-      return of(true);
+    if (this.userProfile && this.userProfile !== '') {
+      this._userProfile = JSON.parse(this.userProfile);
+      this._authenticated = true;
     }
-
-    // Check the access token availability
-    if (!this.accessToken) {
-      return of(false);
-    }
-
-    // Check the access token expire date
-    if (AuthUtils.isTokenExpired(this.accessToken)) {
-      return of(false);
-    }
-
-    // If the access token exists and it didn't expire, sign in using it
-    return this.signInUsingToken();
+    return of(this._authenticated);
   }
 }

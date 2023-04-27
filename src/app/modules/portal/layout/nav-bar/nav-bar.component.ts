@@ -19,8 +19,11 @@ export class NavBarComponent implements OnInit {
   }
 
   isActive(path: string): boolean {
-    console.log(path)
-    console.log('this._router.isActive(path, true)',this._router.isActive(path, true));
+    console.log(path);
+    console.log(
+      'this._router.isActive(path, true)',
+      this._router.isActive(path, true)
+    );
     return this._router.isActive(path, true);
   }
 
@@ -30,6 +33,6 @@ export class NavBarComponent implements OnInit {
 
   signOut() {
     localStorage.clear();
-    this._router.navigate(['/sign-in']);
+    window.location.reload();
   }
 }

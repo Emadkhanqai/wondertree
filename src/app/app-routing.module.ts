@@ -30,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    // canActivateChild: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'portal',

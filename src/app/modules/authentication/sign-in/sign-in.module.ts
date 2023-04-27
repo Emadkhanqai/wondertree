@@ -3,18 +3,23 @@ import { CommonModule } from '@angular/common';
 import { SignInComponent } from './sign-in.component';
 
 import { Route, RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
- const routes: Route[] = [
+const routes: Route[] = [
   {
     path: '',
     component: SignInComponent,
   },
 ];
 
-
 @NgModule({
   declarations: [SignInComponent],
-  imports: [CommonModule,RouterModule.forChild(routes)],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   exports: [],
   providers: [],
 })

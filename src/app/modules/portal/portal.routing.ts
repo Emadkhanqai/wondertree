@@ -1,12 +1,13 @@
 import { Route, Routes } from '@angular/router';
 import { HorizontalComponent } from './layout/horizontal/horizontal.component';
+import { AuthGuard } from '../shared/guard/user-authenticated.guard';
 
 export const portalRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'welcome' },
   {
     path: '',
-    // canActivate: [AuthGuard],
-    // canActivateChild: [AuthGuard],
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     component: HorizontalComponent,
     children: [
       {

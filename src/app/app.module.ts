@@ -8,6 +8,9 @@ import { NavBarComponent } from './modules/portal/layout/nav-bar/nav-bar.compone
 import { PageNotFoundComponent } from './modules/shared/components/page-not-found/page-not-found.component';
 import { AuthService } from './modules/shared/services/authentication.service';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,16 @@ import { HttpClientModule } from '@angular/common/http';
     NavBarComponent,
     PageNotFoundComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, PortalModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    AppRoutingModule,
+    PortalModule,
+    HttpClientModule,
+    ToastrModule.forRoot(),
+  ],
   providers: [AuthService],
   bootstrap: [AppComponent],
 })

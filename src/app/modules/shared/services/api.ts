@@ -22,37 +22,18 @@ export class Api implements OnDestroy {
   get<T>(url: string): Observable<any> {
     return this.http.get<T>(`${API_URL}/${url}`).pipe(
       takeUntil(this.unsubscribe$),
-      map((response: any) => response.data),
+      map((response: any) => response),
       catchError((error: any) => {
         throw new HttpErrorResponse(error);
       })
     );
   }
+
 
   post(url: string, data: any): Observable<any> {
     return this.http.post(`${API_URL}/${url}`, data).pipe(
       takeUntil(this.unsubscribe$),
-      map((response: any) => response.data),
-      catchError((error: any) => {
-        throw new HttpErrorResponse(error);
-      })
-    );
-  }
-
-  getWithHeader<T>(url: string, header: any): Observable<any> {
-    return this.http.get<T>(`${API_URL}/${url}`, { headers: header }).pipe(
-      takeUntil(this.unsubscribe$),
-      map((response: any) => response.data),
-      catchError((error: any) => {
-        throw new HttpErrorResponse(error);
-      })
-    );
-  }
-
-  postWithHeader(url: string, data: any, header: any): Observable<any> {
-    return this.http.post(`${API_URL}/${url}`, data, { headers: header }).pipe(
-      takeUntil(this.unsubscribe$),
-      map((response: any) => response.data),
+      map((response: any) => response),
       catchError((error: any) => {
         throw new HttpErrorResponse(error);
       })
@@ -63,7 +44,7 @@ export class Api implements OnDestroy {
     console.log('url', url);
     return this.http.put(`${API_URL}/${url}`, data).pipe(
       takeUntil(this.unsubscribe$),
-      map((response: any) => response.data),
+      map((response: any) => response),
       catchError((error: any) => {
         throw new HttpErrorResponse(error);
       })
@@ -73,17 +54,7 @@ export class Api implements OnDestroy {
   patch(url: string, data: any): Observable<any> {
     return this.http.patch(`${API_URL}/${url}/${data.id}`, data).pipe(
       takeUntil(this.unsubscribe$),
-      map((response: any) => response.data),
-      catchError((error: any) => {
-        throw new HttpErrorResponse(error);
-      })
-    );
-  }
-
-  patchWithoutId(url: string, data: any): Observable<any> {
-    return this.http.patch(`${API_URL}/${url}`, data).pipe(
-      takeUntil(this.unsubscribe$),
-      map((response: any) => response.data),
+      map((response: any) => response),
       catchError((error: any) => {
         throw new HttpErrorResponse(error);
       })
@@ -93,7 +64,7 @@ export class Api implements OnDestroy {
   delete(url: string, data: any): Observable<any> {
     return this.http.delete(`${API_URL}/${url}/${data.id}`).pipe(
       takeUntil(this.unsubscribe$),
-      map((response: any) => response.data),
+      map((response: any) => response),
       catchError((error: any) => {
         throw new HttpErrorResponse(error);
       })
