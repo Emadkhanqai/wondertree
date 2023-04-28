@@ -1,25 +1,11 @@
 {
   "users": [
     {
-      "name": "Emad",
-      "email": "a@a",
-      "password": "U2FsdGVkX1+uRXGK2eDqtXdaEEgdVfZGonI+LNn2EW0=",
+      "name": "Emad Khan",
+      "email": "admin@gmail.com",
+      "password": "U2FsdGVkX1+d02KDKtfb5vmGLEtn9/Nwo/Lh6WG115s=",
       "role": "user",
       "id": 1
-    },
-    {
-      "name": "d",
-      "email": "d@d",
-      "password": "U2FsdGVkX1/1SXVi8BXbhrPMjzyRgYkLkpQQpRHkUto=",
-      "role": "user",
-      "id": 2
-    },
-    {
-      "name": "c",
-      "email": "c@c",
-      "password": "U2FsdGVkX1/1SXVi8BXbhrPMjzyRgYkLkpQQpRHkUto=",
-      "role": "admin",
-      "id": 3
     }
   ]
 }
