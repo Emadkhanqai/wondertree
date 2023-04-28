@@ -16,6 +16,7 @@ export class ChartsService {
   private generateFakeData(): Observable<any> {
     return new Observable((observer) => {
       const data = [{ data: this.getRandomData(), label: 'Traffic' }];
+
       observer.next(data);
       observer.complete();
     });

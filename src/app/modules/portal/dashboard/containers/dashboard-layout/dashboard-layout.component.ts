@@ -17,14 +17,14 @@ export class DashboardLayoutComponent implements OnInit {
   ngOnInit(): void {
     this.dataSubscription.push(
       this.dataService.fetchSales().subscribe((data) => {
-        console.log('sales data', data);
+        console.log('salesdata', data);
         this.salesTraffic = data;
       })
     );
 
     this.dataSubscription.push(
       this.dataService.fetchUserTraffic().subscribe((data) => {
-        console.log('traffic data', data);
+        console.log('data', data);
         this.userTraffic = data;
       })
     );
