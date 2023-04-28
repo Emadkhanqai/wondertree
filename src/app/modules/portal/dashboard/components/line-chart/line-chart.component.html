@@ -1,0 +1,13 @@
+<div class="bg-white shadow-md rounded-md p-4">
+  <h2 class="text-xl font-bold mb-2">{{ title }}</h2>
+  <div class="chart-wrapper">
+    <canvas
+      baseChart
+      [datasets]="data"
+      [labels]="lineChartLabels"
+      [legend]="true"
+      [type]="'line'"
+    >
+    </canvas>
+  </div>
+</div>
